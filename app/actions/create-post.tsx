@@ -8,5 +8,9 @@ export async function createPost(formData: FormData): Promise<void> {
     method: "POST",
     body: JSON.stringify({ title, body }),
   });
+
+  if (!response.ok) {
+    throw new Error("something went wrong");
+  }
   console.log(response.status);
 }

@@ -6,6 +6,7 @@ import PostForm from "@/components/post-form";
 export default async function HomePage() {
   // this is a server component by default
   // server actions are best for mutations, not for fetching data
+  // note: server calls donst work on libraries like react-query etc. -- im surprised that i didnt know that untill now 😅
   const [users, posts] = await Promise.all([getUsers(), getPosts()]);
 
   return (
