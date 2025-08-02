@@ -11,7 +11,7 @@ type PageProps = {
 export default async function Page(props: PageProps) {
   const { slug } = await props.params;
   const searchParams = await props.searchParams;
-  
+
   const newSearchParams = new URLSearchParams();
   newSearchParams.set("title", "new title");
 
