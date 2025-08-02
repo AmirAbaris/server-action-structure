@@ -1,6 +1,6 @@
 "use client";
 
-import { createPost } from "@/app/actions/create-post";
+import { createPost } from "@/actions/create-post";
 
 export default function PostForm() {
   return (
