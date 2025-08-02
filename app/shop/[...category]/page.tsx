@@ -11,6 +11,8 @@ export default async function Page(props: PageProps) {
     ? (await props.searchParams).brand
     : [(await props.searchParams).brand];
 
+    console.log(category)
+
   return (
     <div>
       <h1>Category: {category.join(" / ")}</h1>
