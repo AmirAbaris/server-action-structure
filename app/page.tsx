@@ -1,23 +1,38 @@
-import { getUsers, getPosts } from "@/lib/get-items";
-import { Post } from "@/types/post-type";
-import { User } from "@/types/user-type";
-import PostForm from "@/components/post-form";
+import { Suspense } from "react";
+import { getPosts } from "./data/post/get-posts";
+import { getUsers } from "./data/user/get-users";
 
-export default async function HomePage() {
-  // this is a server component by default
-  // server actions are best for mutations, not for fetching data
-  // note: server calls donst work on libraries like react-query etc. -- im surprised that i didnt know that untill now 😅
-  const [users, posts] = await Promise.all([getUsers(), getPosts()]);
-
+async function Users() {
+  const users = await getUsers();
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      {users.map((u: User) => (
+    <>
+      {users.map((u) => (
         <p key={u.id}>{u.name}</p>
       ))}
-      {posts.map((p: Post) => (
+    </>
+  );
+}
+
+async function Posts() {
+  const posts = await getPosts();
+  return (
+    <>
+      {posts.map((p) => (
         <p key={p.id}>{p.title}</p>
       ))}
-      <PostForm />
-    </div>
+    </>
+  );
+}
+
+export default function HomePage() {
+  return (
+    <>
+      <Suspense fallback={<p>Loading users...</p>}>
+        <Users />
+      </Suspense>
+      <Suspense fallback={<p>Loading posts...</p>}>
+        <Posts />
+      </Suspense>
+    </>
   );
 }
