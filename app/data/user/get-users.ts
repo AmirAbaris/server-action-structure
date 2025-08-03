@@ -5,6 +5,8 @@ import { requireUser } from "./require-user";
 export async function getUsers() {
   await requireUser();
 
+  await new Promise((resolve) => setTimeout(resolve, 4000))
+
   const res = await fetch("https://jsonplaceholder.typicode.com/users");
   if (!res.ok) {
     throw new Error("something went wrong");

@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import { getPosts } from "./data/post/get-posts";
 import { getUsers } from "./data/user/get-users";
+import { ErrorBoundary } from "./error-boundary";
 
 async function Users() {
   const users = await getUsers();
@@ -27,12 +28,17 @@ async function Posts() {
 export default function HomePage() {
   return (
     <>
-      <Suspense fallback={<p>Loading users...</p>}>
-        <Users />
-      </Suspense>
-      <Suspense fallback={<p>Loading posts...</p>}>
-        <Posts />
-      </Suspense>
+      <ErrorBoundary fallback={<p>Something went wrong</p>}>
+        <Suspense fallback={<p>Loading users...</p>}>
+          <Users />
+        </Suspense>
+      </ErrorBoundary>
+
+      <ErrorBoundary fallback={<p>Something went wrong</p>}>
+        <Suspense fallback={<p>Loading posts...</p>}>
+          <Posts />
+        </Suspense>
+      </ErrorBoundary>
     </>
   );
 }
